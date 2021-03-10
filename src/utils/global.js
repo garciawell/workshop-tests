@@ -5,3 +5,9 @@ export function sum(a,b) {
   
     return a + b;
   }
+
+  export const capitalizeString = (s) => {
+    if (typeof s !== 'string') return '';
+    return s.replace(/\b\w/g, (l) => l.toUpperCase());
+  };
+
