@@ -48,12 +48,3 @@ describe('Reducer Get Users', () => {
     });
   });
 });
-
-
-
-// it('INITIAL_STATE', () => {
-//   const state = stateControl(INITIAL_STATE, 'INITIAL_STATE');
-//   expect(state).toStrictEqual({
-//     ...INITIAL_STATE,
-//   });
-// });

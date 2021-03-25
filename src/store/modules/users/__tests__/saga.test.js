@@ -21,7 +21,7 @@ describe('SAGAS getUsers', () => {
         login: "mojombo"
     }]
 
-  it('Should be able to call getSalesData saga if call action GET_SALES_DATA_REQUEST', () => {
+  it('Should be able to call getUsers saga if call action GET_REQUEST', () => {
     expect(gen.next().value).toEqual(
         takeLatest(Types.GET_REQUEST, getUsers)
     );
@@ -36,11 +36,15 @@ describe('SAGAS getUsers', () => {
     await runSaga(
       {
         dispatch: (action) => dispatched.push(action),
-        getState: () => ({ state: 'test' }),
+        getState: () => ({
+            users: {
+                data: [4444444]
+            }
+         }),
       },
       getUsers,
       {
-        payload: { token: 123 },
+        forbidden: false
       }
     ).toPromise();
 
@@ -67,12 +71,28 @@ describe('SAGAS getUsers', () => {
       },
       getUsers,
       {
-        payload: { token: 123 },
-        isServer: true,
+        forbidden: false
       }
     ).toPromise();
 
     expect(usersAuth.users.mock.calls.length).toBe(1);
+    expect(dispatched).toContainEqual(Creators.getUsersFailure());
+  });
+
+  it('Should be able to failure if is forbidden', async () => {
+    const dispatched = [];
+
+    await runSaga(
+      {
+        dispatch: (action) => dispatched.push(action),
+        getState: () => ({ state: 'test' }),
+      },
+      getUsers,
+      {
+        forbidden: true
+      }
+    ).toPromise();
+
     expect(dispatched).toContainEqual(Creators.getUsersFailure());
   });
 });
