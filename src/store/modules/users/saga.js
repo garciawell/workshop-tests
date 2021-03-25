@@ -2,20 +2,21 @@ import { call, takeLatest, put } from 'redux-saga/effects';
 import axios from "axios"
 // import api from './services/api';
 import { Types as UsersTypes } from '../../modules/users/actions';
+import usersAuth from '../../../services/api';
 
 
 export function* getUsers() {
   try {
-    const { data } = yield call(axios.get, "https://api.github.com/users");
+    const { data } = yield call(usersAuth.users, {
+      method: "get"
+    });
 
     console.log("response", data)
 
     yield put({ type: UsersTypes.GET_SUCCESS, payload: data });
 
   } catch (err) {
-    console.log('OPSS', err)
-    // yield Toast('error', MESSAGE.errorRequest);
-    // yield put({ type: UsersTypes.GET_FAILURE });
+    yield put({ type: UsersTypes.GET_FAILURE });
   }
 }
 

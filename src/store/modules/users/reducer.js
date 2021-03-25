@@ -15,12 +15,13 @@ export default function users(state = INITIAL_STATE, action) {
         break;
       }
       case UsersTypes.GET_SUCCESS: {
-        draft.data = action.payload;
+        draft.data = action.payload.map(item => ({...item, garcia: "Wellington"}));
         draft.loading = false;
         break;
       }
       case UsersTypes.GET_FAILURE: {
         draft.loading = false;
+        draft.data = [];
         break;
       }
 
