@@ -12,7 +12,6 @@ function Pages() {
     dispatch(Creators.getUsers())
   }, [])
 
-
   return (
       <div>
         <img src={logo} className="App-logo" alt="logo" />
